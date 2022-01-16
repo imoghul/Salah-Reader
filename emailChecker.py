@@ -1,0 +1,61 @@
+#modules
+import imaplib
+import email
+import os
+from confidential import *
+# https://www.systoolsgroup.com/imap/
+gmail_host= 'imap.gmail.com'
+
+#set connection
+mail = imaplib.IMAP4_SSL(gmail_host)
+
+#login
+mail.login(username, app_password)
+
+#select inbox
+mail.select("INBOX")
+
+#select specific mails
+_, selected_mails = mail.search(None, '(FROM "hsalih@hhden.com")')
+
+#total number of mails from specific user
+print("Total Messages from Ammu Saleh:" , len(selected_mails[0].split()))
+mails = selected_mails[0].split()
+mails.sort(key = None,reverse=True)
+for num in [mails[0]]:#[selected_mails[0].split()[1]]:
+    _, data = mail.fetch(num , '(RFC822)')
+    _, bytes_data = data[0]
+
+    #convert the byte data to message
+    email_message = email.message_from_bytes(bytes_data)
+    print("\n===========================================")
+
+    #access data
+    print("Subject: ",email_message["subject"])
+    print("To:", email_message["to"])
+    print("From: ",email_message["from"])
+    print("Date: ",email_message["date"])
+    for part in email_message.walk():
+        if part.get_content_type()=="text/plain" or part.get_content_type()=="text/html":
+            message = part.get_payload(decode=True)
+            print("Message: \n", message.decode())
+            print("==========================================\n")
+            #break
+    #for part in email_message.walk():
+        # this part comes from the snipped I don't understand yet... 
+        if part.get_content_maintype() == 'multipart':
+            continue
+        if part.get('Content-Disposition') is None:
+            continue
+        fileName = part.get_filename()
+        if(fileName != "Iqaamah Times.docx"):
+            print("No files found")
+            exit()
+        if bool(fileName):
+            filePath = os.path.join('/Users/ibrahim/Programming/Salah Reader/iqaamahdoc', fileName)
+            #if not os.path.isfile(filePath) :
+            fp = open(filePath, "wb")
+            fp.write(part.get_payload(decode=True))
+            fp.close()
+            subject = email_message["subject"]#str(email_message).split("Subject: ", 1)[1].split("\nTo:", 1)[0]
+            print('Downloaded "{file}" from email titled "{subject}".'.format(file=fileName, subject=subject, ))

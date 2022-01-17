@@ -51,7 +51,7 @@ for num in [mails[0]]:#[selected_mails[0].split()[1]]:
             print("No files found")
             exit()
         if bool(fileName):
-            filePath = os.path.join('/Users/ibrahim/Programming/Salah Reader/iqaamahdoc', fileName)
+            filePath = os.path.join('iqaamahdoc', fileName)
             #if not os.path.isfile(filePath) :
             fp = open(filePath, "wb")
             fp.write(part.get_payload(decode=True))

@@ -16,10 +16,9 @@ mail.login(username, app_password)
 mail.select("INBOX")
 
 #select specific mails
-_, selected_mails = mail.search(None, '(FROM "hsalih@hhden.com")')
+_, selected_mails = mail.search(None, '(FROM "%s")'%sender)
 
 #total number of mails from specific user
-print("Total Messages from Ammu Saleh:" , len(selected_mails[0].split()))
 mails = selected_mails[0].split()
 mails.sort(key = None,reverse=True)
 for num in [mails[0]]:#[selected_mails[0].split()[1]]:

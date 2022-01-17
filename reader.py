@@ -26,4 +26,4 @@ def processWords(words):
 			outlist[time] = days
 	return outlist
 
-print(processWords(doc2words("Iqaamah Times.docx")))
+print(processWords(doc2words("iqaamahdoc/Iqaamah Times.docx")))

@@ -11,7 +11,7 @@ public class GetSalah {
 
 	  try {
 
-		URL url = new URL("https://moneyless-gnu-7476.dataplicity.io/fajr");
+		URL url = new URL("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/all");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Accept", "application/json");

@@ -9,7 +9,7 @@ from emailChecker import *
 def getSalahTime(salah):
     retrieveIqaamahTimesDoc()
     times = getTimes()
-    return json.dumps(getDays(salah))
+    return json.dumps(times[salah])
 
 
 class helpPageResource:
@@ -20,15 +20,14 @@ class helpPageResource:
             + req.url
             + "mtws-iqaamah-times/<salah>\n\n"
             "Salah names: \n"
-            "    /all, /fajr, /thuhr, /asr, /magrib, /ishaa\n"
+            "    /fajr, /thuhr, /asr, /magrib, /ishaa\n"
         )
-
 
 class All:
     def on_get(self, req, resp):
         retrieveIqaamahTimesDoc()
-        resp.text = json.dumps(getSummary(getTimes()))
-
+        print(getTimes())
+	resp.text = getTimes()
 
 class Fajr:
     def on_get(self, req, resp):
@@ -64,8 +63,8 @@ asr_page = Asr()
 magrib_page = Magrib()
 ishaa_page = Ishaa()
 
-app.add_route("/mtws-iqaamah-times", help_page)
-app.add_route("/mtws-iqaamah-times/all", all_page)
+app.add_route("/mtws-iqaamah-times",help_page)
+app.add_route("/mtws-iqaamah-times/all", iqaamahtimes_page)
 app.add_route("/mtws-iqaamah-times/fajr", fajr_page)
 app.add_route("/mtws-iqaamah-times/thuhr", thuhr_page)
 app.add_route("/mtws-iqaamah-times/asr", asr_page)

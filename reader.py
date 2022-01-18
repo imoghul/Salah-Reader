@@ -16,6 +16,7 @@ def doc2words(doc):
                 words2.append(j)
     return words2
 
+
 def identifyDay(day):
     monday = "monday"
     tuesday = "tuesday"
@@ -24,29 +25,54 @@ def identifyDay(day):
     friday = "friday"
     saturday = "saturday"
     sunday = "sunday"
-    if day.lower() in [monday[0:i+1] for i in range(len(monday))]+[monday[0:i+1]+"." for i in range(len(monday))]:
+    if day.lower() in [monday[0 : i + 1] for i in range(len(monday))] + [
+        monday[0 : i + 1] + "." for i in range(len(monday))
+    ]:
         return 0
-    if day.lower() in [tuesday[0:i+1] for i in range(len(tuesday))]+[tuesday[0:i+1]+"." for i in range(len(tuesday))]:
+    if day.lower() in [tuesday[0 : i + 1] for i in range(len(tuesday))] + [
+        tuesday[0 : i + 1] + "." for i in range(len(tuesday))
+    ]:
         return 1
-    if day.lower() in [wednesday[0:i+1] for i in range(len(wednesday))]+[wednesday[0:i+1]+"." for i in range(len(wednesday))]:
+    if day.lower() in [wednesday[0 : i + 1] for i in range(len(wednesday))] + [
+        wednesday[0 : i + 1] + "." for i in range(len(wednesday))
+    ]:
         return 2
-    if day.lower() in [thursday[0:i+1] for i in range(len(thursday))]+[thursday[0:i+1]+"." for i in range(len(thursday))]:
+    if day.lower() in [thursday[0 : i + 1] for i in range(len(thursday))] + [
+        thursday[0 : i + 1] + "." for i in range(len(thursday))
+    ]:
         return 3
-    if day.lower() in [friday[0:i+1] for i in range(len(friday))]+[friday[0:i+1]+"." for i in range(len(friday))]:
+    if day.lower() in [friday[0 : i + 1] for i in range(len(friday))] + [
+        friday[0 : i + 1] + "." for i in range(len(friday))
+    ]:
         return 4
-    if day.lower() in [saturday[0:i+1] for i in range(len(saturday))]+[saturday[0:i+1]+"." for i in range(len(saturday))]:
+    if day.lower() in [saturday[0 : i + 1] for i in range(len(saturday))] + [
+        saturday[0 : i + 1] + "." for i in range(len(saturday))
+    ]:
         return 5
-    if day.lower() in [sunday[0:i+1] for i in range(len(sunday))]+[sunday[0:i+1]+"." for i in range(len(sunday))]:
+    if day.lower() in [sunday[0 : i + 1] for i in range(len(sunday))] + [
+        sunday[0 : i + 1] + "." for i in range(len(sunday))
+    ]:
         return 6
 
+
 def processWords(words):
-    daysInWeek = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    daysInWeek = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ]
     outlist = {}
     current = None
     for i in range(len(words)):
         if words[i] == "AM" or words[i] == "PM":
             if words[i - 2].find(")") != -1:
-                days = daysInWeek[identifyDay(words[i-4][1:]):1+identifyDay(words[i-2][:-1])]
+                days = daysInWeek[
+                    identifyDay(words[i - 4][1:]) : 1 + identifyDay(words[i - 2][:-1])
+                ]
             else:
                 days = daysInWeek
             time = words[i - 1] + words[i]
@@ -61,4 +87,22 @@ def getTimes():
     return processWords(doc2words("iqaamahdoc/Iqaamah Times.docx"))
 
 
+def getSummary(times):
+    res = {
+        "Monday": [],
+        "Tuesday": [],
+        "Wednesday": [],
+        "Thursday": [],
+        "Friday": [],
+        "Saturday": [],
+        "Sunday": [],
+    }
+    # times = getTimes()
+    for salah in times:
+        for time in times[salah]:
+            for day in times[salah][time]:
+                res[day].append(time)
+    return res
+def getDays(salah):
+    return getSummary({salah:getTimes()[salah]})
 print(getTimes())

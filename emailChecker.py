@@ -24,28 +24,28 @@ def retrieveIqaamahTimesDoc():
     # total number of mails from specific user
     mails = selected_mails[0].split()
     mails.sort(key=None, reverse=True)
-    num = mails[2]
-    #for num in [mails[0]]:  # [selected_mails[0].split()[1]]:
+    num = mails[0]
+    # for num in [mails[0]]:  # [selected_mails[0].split()[1]]:
     _, data = mail.fetch(num, "(RFC822)")
     _, bytes_data = data[0]
 
-        # convert the byte data to message
+    # convert the byte data to message
     email_message = email.message_from_bytes(bytes_data)
-    print("\n===========================================")
+    # print("\n===========================================")
 
     # access data
-    print("Subject: ", email_message["subject"])
-    print("To:", email_message["to"])
-    print("From: ", email_message["from"])
-    print("Date: ", email_message["date"])
+    # print("Subject: ", email_message["subject"])
+    # print("To:", email_message["to"])
+    # print("From: ", email_message["from"])
+    # print("Date: ", email_message["date"])
     for part in email_message.walk():
         if (
             part.get_content_type() == "text/plain"
             or part.get_content_type() == "text/html"
         ):
             message = part.get_payload(decode=True)
-            print("Message: \n", message.decode())
-            print("==========================================\n")
+            # print("Message: \n", message.decode())
+            # print("==========================================\n")
             # break
             # for part in email_message.walk():
             # this part comes from the snipped I don't understand yet...
@@ -54,7 +54,7 @@ def retrieveIqaamahTimesDoc():
         if part.get("Content-Disposition") is None:
             continue
         fileName = part.get_filename()
-        if fileName != "Iqaamah Times.docx":
+        if not ("Iqaamah Times.docx" in fileName):
             print("No files found")
             exit()
         if bool(fileName):
@@ -72,3 +72,6 @@ def retrieveIqaamahTimesDoc():
                     subject=subject,
                 )
             )
+
+
+retrieveIqaamahTimesDoc()

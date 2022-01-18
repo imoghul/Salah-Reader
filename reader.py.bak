@@ -24,6 +24,7 @@ def identifyDay(day):
     friday = "friday"
     saturday = "saturday"
     sunday = "sunday"
+    print([monday[0:i+1] for i in range(len(monday))]+[monday[0:i+1]+"." for i in range(len(monday))])
     if day.lower() in [monday[0:i+1] for i in range(len(monday))]+[monday[0:i+1]+"." for i in range(len(monday))]:
         return 0
     if day.lower() in [tuesday[0:i+1] for i in range(len(tuesday))]+[tuesday[0:i+1]+"." for i in range(len(tuesday))]:
@@ -46,7 +47,9 @@ def processWords(words):
     for i in range(len(words)):
         if words[i] == "AM" or words[i] == "PM":
             if words[i - 2].find(")") != -1:
-                days = daysInWeek[identifyDay(words[i-4][1:]):1+identifyDay(words[i-2][:-1])]
+                #days = words[i - 4] + words[i - 3] + words[i - 2]
+                print(identifyDay(words[i-4]),identifyDay(words[i-2]))
+		days = daysInWeek[identifyDay(words[i-4]):identifyDay(words[i-2])]
             else:
                 days = daysInWeek
             time = words[i - 1] + words[i]

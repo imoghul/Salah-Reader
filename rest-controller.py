@@ -12,6 +12,10 @@ def getSalahTime(salah):
     return json.dumps(getDays(salah))
 
 
+class mainPage:
+    def on_get(self,req,resp):
+        resp.text = "try /mtws-iqaamah-times"
+
 class helpPageResource:
     def on_get(self, req, resp):
         resp.content_type = falcon.MEDIA_TEXT
@@ -56,6 +60,7 @@ class Ishaa:
 
 
 app = falcon.App()
+main_page = mainPage()
 help_page = helpPageResource()
 all_page = All()
 fajr_page = Fajr()
@@ -64,6 +69,7 @@ asr_page = Asr()
 magrib_page = Magrib()
 ishaa_page = Ishaa()
 
+app.add_route("/",main_page)
 app.add_route("/mtws-iqaamah-times", help_page)
 app.add_route("/mtws-iqaamah-times/all", all_page)
 app.add_route("/mtws-iqaamah-times/fajr", fajr_page)

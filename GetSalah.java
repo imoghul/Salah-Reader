@@ -7,41 +7,43 @@ import java.net.URL;
 
 public class GetSalah {
 
-	public static void main(String[] args) {
+    public static String getData() {
 
-	  try {
+        try {
 
-		URL url = new URL("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/all");
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Accept", "application/json");
+            URL url = new URL("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/all");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
 
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ conn.getResponseCode());
-		}
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                                           + conn.getResponseCode());
+            }
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-			(conn.getInputStream())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
 
-		String output;
-		System.out.println("Output from Server .... \n");
-		while ((output = br.readLine()) != null) {
-			System.out.println(output);
-		}
+            String output;
 
-		conn.disconnect();
+            while ((output = br.readLine()) != null) {
+                conn.disconnect();
+                return output;
+            }
 
-	  } catch (MalformedURLException e) {
+            conn.disconnect();
+            return output;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return "Error";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error";
+        }
 
-		e.printStackTrace();
-
-	  } catch (IOException e) {
-
-		e.printStackTrace();
-
-	  }
-
-	}
+    }
+    public static void main(String[] args) {
+        System.out.println(getData());
+    }
 
 }

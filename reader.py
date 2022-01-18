@@ -103,6 +103,10 @@ def getSummary(times):
             for day in times[salah][time]:
                 res[day].append(time)
     return res
+
+
 def getDays(salah):
-    return getSummary({salah:getTimes()[salah]})
+    return getSummary({salah: getTimes()[salah]})
+
+
 print(getTimes())

@@ -6,9 +6,15 @@ from reader import *
 from emailChecker import *
 
 
+def updateDoc():
+    latestEmail = latest()
+    if latestEmail["subject"] != CurrEmail.currEmail:
+        CurrEmail.currEmail = latestEmail["subject"]
+        retrieveIqaamahTimesDoc(email_message=latestEmail)
+
+
 def getSalahTime(salah):
-    retrieveIqaamahTimesDoc()
-    times = getTimes()
+    updateDoc()
     return json.dumps(getDays(salah))
 
 
@@ -23,15 +29,15 @@ class helpPageResource:
         resp.text = (
             "Hello! To interact with this API please use GET requests on:\n\n"
             + req.url
-            + "mtws-iqaamah-times/<salah>\n\n"
+            + "mtws-iqaamah-times/<options>\n\n"
             "Salah names: \n"
-            "    /all, /fajr, /thuhr, /asr, /magrib, /ishaa\n"
+            "    /email, /all, /fajr, /thuhr, /asr, /magrib, /ishaa\n"
         )
 
 
 class All:
     def on_get(self, req, resp):
-        retrieveIqaamahTimesDoc()
+        updateDoc()
         resp.text = json.dumps(getSummary(getTimes()))
 
 
@@ -60,6 +66,18 @@ class Ishaa:
         resp.text = getSalahTime("Ishaa")
 
 
+class CurrEmail:
+    currEmail = None  # {'current email':"NOTHING"}
+
+    def on_get(self, req, resp):
+        resp.text = json.dumps(CurrEmail.currEmail)
+
+    # def on_put(self, req, resp):
+    #    change = json.loads(str(req.bounded_stream.read().decode('utf-8')))
+    #    CurrEmail.currEmail=change
+    #    resp.text = json.dumps(change)
+
+
 app = falcon.App()
 main_page = mainPage()
 help_page = helpPageResource()
@@ -69,6 +87,7 @@ thuhr_page = Thuhr()
 asr_page = Asr()
 magrib_page = Magrib()
 ishaa_page = Ishaa()
+curremail_page = CurrEmail()
 
 app.add_route("/", main_page)
 app.add_route("/mtws-iqaamah-times", help_page)
@@ -78,10 +97,11 @@ app.add_route("/mtws-iqaamah-times/thuhr", thuhr_page)
 app.add_route("/mtws-iqaamah-times/asr", asr_page)
 app.add_route("/mtws-iqaamah-times/magrib", magrib_page)
 app.add_route("/mtws-iqaamah-times/ishaa", ishaa_page)
+app.add_route("/mtws-iqaamah-times/email", curremail_page)
 
 if __name__ == "__main__":
 
     with make_server("", 80, app) as httpd:
 
-        print("Serving REST LED controller on Wormhole...")
+        print("Serving REST controller on Wormhole...")
         httpd.serve_forever()

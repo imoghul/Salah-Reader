@@ -3,9 +3,10 @@ import imaplib
 import email
 import os
 from confidential import *
+import requests
 
 
-def retrieveIqaamahTimesDoc():
+def latest():
     # https://www.systoolsgroup.com/imap/
     gmail_host = "imap.gmail.com"
 
@@ -31,8 +32,18 @@ def retrieveIqaamahTimesDoc():
 
     # convert the byte data to message
     email_message = email.message_from_bytes(bytes_data)
-    # print("\n===========================================")
+    return email_message
 
+
+def retrieveIqaamahTimesDoc(email_message=latest()):
+    try:
+        lastEmail = "empty"  # requests.get("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/email").json()['current email']
+    except:
+        lastEmail = "-1"
+    if lastEmail == email_message["subject"]:
+        print("Using previously downloaded: ", lastEmail)
+        return lastEmail
+    # requests.put("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/email",data= "{\"current email\": \"%s\"}"%lastEmail)
     # access data
     # print("Subject: ", email_message["subject"])
     # print("To:", email_message["to"])
@@ -72,6 +83,7 @@ def retrieveIqaamahTimesDoc():
                     subject=subject,
                 )
             )
+    return lastEmail
 
 
 retrieveIqaamahTimesDoc()

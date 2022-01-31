@@ -117,16 +117,27 @@ def processWordsPdf(words):
     #words = re.split("",words)
     print(words)
     for i in [i for i in range(len(words)) if words.startswith(':', i)]:
+        days = daysInWeek
         time = words[i-2:i+5]   
         if not time[0].isnumeric(): time = time[1:]
         if words[i-3]==")": 
             counter = i
             while words[counter]!="(": counter-=1
-            time = words[counter:i-2]+" "+time
+            days = words[counter:i-2]
         elif words[i-2]==")":
             counter = i
             while words[counter]!="(": counter-=1
-            time = words[counter:i-1]+" "+time
+            days = words[counter:i-1]
+        if type(days)!=list:
+            days = days[1:-1]
+            loc = days.find("-")
+            if loc!=-1: days = daysInWeek[identifyDay(days[:loc]):identifyDay(days[loc+1:])+1] 
+            else:
+               for loc in range(1,len(days)):
+                   try: 
+                       days = daysInWeek[identifyDay(days[:loc]):identifyDay(days[loc:])+1]   
+                       break
+                   except:pass
         counter = i
         while words[counter:counter+8]!="Salaatul":
             counter-=1
@@ -135,8 +146,8 @@ def processWordsPdf(words):
         elif words[counter+8:counter+11]=="Asr": salaah="Asr"
         elif words[counter+8:counter+11]=="Mag": salaah="Magrib"
         elif words[counter+8:counter+11]=="Ish": salaah="Ishaa"
-        try: outlist[salaah].append(time)
-        except:outlist[salaah]=[time]
+        try:outlist[salaah][time] = days
+        except:outlist[salaah] = {time:days}
     return outlist
 
 

@@ -3,7 +3,6 @@ import imaplib
 import email
 import os
 from confidential import *
-import requests
 
 
 def latest():

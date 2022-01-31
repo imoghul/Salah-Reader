@@ -8,9 +8,9 @@ from emailChecker import *
 
 def updateDoc():
     latestEmail = latest()
-    if latestEmail["subject"] != CurrEmail.currEmail:
-        CurrEmail.currEmail = latestEmail["subject"]
-        retrieveIqaamahTimesDoc(email_message=latestEmail)
+    #if latestEmail["subject"] != CurrEmail.currEmail:
+    CurrEmail.currEmail = latestEmail["subject"]
+    retrieveIqaamahTimesDoc(email_message=latestEmail)
 
 
 def getSalahTime(salah):

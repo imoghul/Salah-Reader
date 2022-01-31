@@ -36,6 +36,7 @@ def latest():
 
 
 def retrieveIqaamahTimesDoc(email_message=latest()):
+    print(email_message["subject"])
     try:
         lastEmail = "empty"  # requests.get("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/email").json()['current email']
     except:
@@ -65,12 +66,13 @@ def retrieveIqaamahTimesDoc(email_message=latest()):
         if part.get("Content-Disposition") is None:
             continue
         fileName = part.get_filename()
-        if not ("Iqaamah Times.docx" in fileName):
+        if not ("Iqaamah Times.docx" in fileName or "Iqaamah Times.pdf" in fileName):
             print("No files found")
             exit()
         if bool(fileName):
             filePath = os.path.join("iqaamahdoc", fileName)
             # if not os.path.isfile(filePath) :
+            os.system("rm iqaamahdoc/*")
             fp = open(filePath, "wb")
             fp.write(part.get_payload(decode=True))
             fp.close()

@@ -114,8 +114,6 @@ def processWordsPdf(words):
     salaahs = ["Fajr","Thuhr","Asr","Magrib","Ishaa"]
     outlist = {}
     current = None
-    #words = re.split("",words)
-    print(words)
     for i in [i for i in range(len(words)) if words.startswith(':', i)]:
         days = daysInWeek
         time = words[i-2:i+5]   

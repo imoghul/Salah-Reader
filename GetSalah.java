@@ -1,13 +1,19 @@
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class GetSalah {
 
-    public static String getData() {
+    public static String getDataStr() {
 
         try {
 
@@ -42,8 +48,27 @@ public class GetSalah {
         }
 
     }
+    public static Map<String,String[]> parser(String times){
+	Map<String,String[]> res = new HashMap<String,String[]>();
+	String timesData = getDataStr();
+        final JSONObject obj = new JSONObject(timesData);
+	String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+	for(int i = 0;i<days.length;++i){
+		String[] timesDay = new String[5];
+        	JSONArray timesJson = obj.getJSONArray(days[i]);
+		for(int t = 0;t<timesJson.length();++t){
+			timesDay[t]=timesJson.getString(t);
+		}
+		res.put(days[i],timesDay);
+	}
+	return res;
+	
+    }
     public static void main(String[] args) {
-        System.out.println(getData());
+    	for (Map.Entry<String, String[]> entry : parser(getDataStr()).entrySet()) {
+  		System.out.println(entry.getKey()); 
+		for(String i : entry.getValue()) System.out.println(i);
+	}
     }
 
 }

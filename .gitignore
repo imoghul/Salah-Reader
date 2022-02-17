@@ -1,0 +1,6 @@
+confidentail.py
+*.pdf
+*.doc
+*.docx
+iqaamahdoc
+__pycache__

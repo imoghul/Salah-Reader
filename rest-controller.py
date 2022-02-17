@@ -5,12 +5,13 @@ import docx2txt
 from reader import *
 from emailChecker import *
 
-
 def updateDoc():
     latestEmail = latest()
-    #if latestEmail["subject"] != CurrEmail.currEmail:
-    CurrEmail.currEmail = latestEmail["subject"]
-    retrieveIqaamahTimesDoc(email_message=latestEmail)
+    if latestEmail["subject"] != CurrEmail.currEmail:
+        CurrEmail.currEmail = latestEmail["subject"]
+        retrieveIqaamahTimesDoc(email_message=latestEmail)
+        return True
+    return False
 
 
 def getSalahTime(salah):
@@ -34,37 +35,34 @@ class helpPageResource:
             "    /email, /all, /fajr, /thuhr, /asr, /magrib, /ishaa\n"
         )
 
-
-class All:
+class Salah:
+    salahName = ""
+    val = {}
     def on_get(self, req, resp):
-        updateDoc()
-        resp.text = json.dumps(getSummary(getTimes()))
+        if (not updateDoc() and self.val != {}):
+            resp.text = self.val
+            return
+        if self.salahName == "All": self.val = json.dumps(getSummary(getTimes()))
+        else: self.val = getSalahTime(self.salahName)
+        resp.text = self.val 
 
+class All(Salah):
+    salahName = "All"
 
-class Fajr:
-    def on_get(self, req, resp):
-        resp.text = getSalahTime("Fajr")
+class Fajr(Salah):
+    salahName = "Fajr"
 
+class Thuhr(Salah):
+    salahName = "Thuhr"
 
-class Thuhr:
-    def on_get(self, req, resp):
-        resp.text = getSalahTime("Thuhr")
+class Asr(Salah):
+    salahName = "Asr"
 
+class Magrib(Salah):
+    salahName = "Magrib"
 
-class Asr:
-    def on_get(self, req, resp):
-        resp.text = getSalahTime("Asr")
-
-
-class Magrib:
-    def on_get(self, req, resp):
-        resp.text = getSalahTime("Magrib")
-
-
-class Ishaa:
-    def on_get(self, req, resp):
-        resp.text = getSalahTime("Ishaa")
-
+class Ishaa(Salah):
+    salahName = "Ishaa"
 
 class CurrEmail:
     currEmail = None  # {'current email':"NOTHING"}

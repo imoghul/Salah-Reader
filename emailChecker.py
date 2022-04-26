@@ -4,8 +4,11 @@ import email
 import os
 from confidential import *
 
+emailIndex = 0
+
 
 def latest():
+    global emailIndex
     # https://www.systoolsgroup.com/imap/
     gmail_host = "imap.gmail.com"
 
@@ -24,7 +27,8 @@ def latest():
     # total number of mails from specific user
     mails = selected_mails[0].split()
     mails.sort(key=None, reverse=True)
-    num = mails[0]
+    num = mails[emailIndex]
+    print(mails)
     # for num in [mails[0]]:  # [selected_mails[0].split()[1]]:
     _, data = mail.fetch(num, "(RFC822)")
     _, bytes_data = data[0]
@@ -35,6 +39,7 @@ def latest():
 
 
 def retrieveIqaamahTimesDoc(email_message=latest()):
+    global emailIndex
     print(email_message["subject"])
     try:
         lastEmail = "empty"  # requests.get("https://moneyless-gnu-7476.dataplicity.io/mtws-iqaamah-times/email").json()['current email']
@@ -65,9 +70,13 @@ def retrieveIqaamahTimesDoc(email_message=latest()):
         if part.get("Content-Disposition") is None:
             continue
         fileName = part.get_filename()
-        if not ("Iqaamah Times.docx" in fileName or "Iqaamah Times.pdf" in fileName):
+        if not ("Iqaamah Times" in fileName):
             print("No files found")
-            exit()
+            emailIndex += 1
+            retrieveIqaamahTimesDoc(email_message=latest())
+            return  # exit()
+        else:
+            emailIndex = 0
         if bool(fileName):
             filePath = os.path.join("iqaamahdoc", fileName)
             # if not os.path.isfile(filePath) :

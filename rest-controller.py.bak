@@ -44,9 +44,9 @@ class Salah:
             return
         if self.salahName == "All": self.val = json.dumps(getSummary(getTimes()))
         else: self.val = getSalahTime(self.salahName)
-        resp.text = self.val
-        with open("salahTimes/"+self.salahName+'.json', 'w', encoding='utf-8') as f:
-            json.dump(self.val, f, ensure_ascii=False, indent=4)
+        resp.text = self.val 
+	with open("salahTimes/"+salahName+'.json', 'w', encoding='utf-8') as f:
+    		json.dump(data, f, ensure_ascii=False, indent=4)
 class All(Salah):
     salahName = "All"
 

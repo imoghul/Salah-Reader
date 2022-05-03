@@ -10,12 +10,12 @@ def updateDoc():
     if latestEmail["subject"] != CurrEmail.currEmail:
         CurrEmail.currEmail = latestEmail["subject"]
         retrieveIqaamahTimesDoc(email_message=latestEmail)
-        All.val = {}
-        Fajr.val = {}
-        Thuhr.val = {}
-        Asr.val = {}
-        Magrib.val = {}
-        Ishaa.val = {}
+	All.val = {}
+	Fajr.val = {}
+	Thuhr.val = {}
+	Asr.val = {}
+	Magrib.val = {}
+	Ishaa.val = {}
         return True
     return False
 

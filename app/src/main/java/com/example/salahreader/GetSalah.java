@@ -53,9 +53,8 @@ public class GetSalah {
         Map<String, String[]> res = new HashMap<String, String[]>();
 
         try {
-            String timesData = getDataStr();
-            final JSONObject obj = new JSONObject(timesData);
-            String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+            final JSONObject obj = new JSONObject(times);
+            String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
             for(int i = 0; i < days.length; ++i) {
                 String[] timesDay = new String[5];

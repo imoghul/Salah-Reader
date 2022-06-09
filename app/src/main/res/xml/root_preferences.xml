@@ -36,7 +36,7 @@
     <PreferenceCategory android:title="Fajr">
         <EditTextPreference
             android:key="fajrTime"
-            android:title="Blank"
+            android:title="Fajr Time"
             android:dialogTitle="Fajr Time"
             android:defaultValue="FAJR TIME HERE"/>
         <CheckBoxPreference
@@ -47,9 +47,9 @@
     <PreferenceCategory android:title="Thuhr">
         <EditTextPreference
             android:key="thuhrTime"
-            android:title="Blank"
+            android:title="Thuhr Time"
             android:dialogTitle="Thur Time"
-            android:defaultValue="Thuhr TIME HERE"/>
+            android:defaultValue="THUHR TIME HERE"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="thuhrCheckBox"
@@ -59,7 +59,7 @@
     <PreferenceCategory android:title="Asr">
         <EditTextPreference
             android:key="asrTime"
-            android:title="Blank"
+            android:title="Asr Time"
             android:dialogTitle="Asr Time"
             android:defaultValue="ASR TIME HERE"/>
         <CheckBoxPreference
@@ -70,7 +70,7 @@
     <PreferenceCategory android:title="Magrib">
         <EditTextPreference
             android:key="magribTime"
-            android:title="Blank"
+            android:title="Magrib Time"
             android:dialogTitle="Magrib Time"
             android:defaultValue="MAGRIB TIME HERE"/>
         <CheckBoxPreference
@@ -81,7 +81,7 @@
     <PreferenceCategory android:title="Ishaa">
         <EditTextPreference
             android:key="ishaaTime"
-            android:title="Blank"
+            android:title="Ishaa Time"
             android:dialogTitle="Ishaa Time"
             android:defaultValue="ISHAA TIME HERE"/>
         <CheckBoxPreference

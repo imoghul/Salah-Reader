@@ -1,35 +1,92 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
+<!--    <PreferenceCategory app:title="@string/messages_header">-->
 
+<!--        <EditTextPreference-->
+<!--            app:key="signature"-->
+<!--            app:title="@string/signature_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
+
+<!--        <ListPreference-->
+<!--            app:defaultValue="reply"-->
+<!--            app:entries="@array/reply_entries"-->
+<!--            app:entryValues="@array/reply_values"-->
+<!--            app:key="reply"-->
+<!--            app:title="@string/reply_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
+
+<!--    </PreferenceCategory>-->
+
+<!--    <PreferenceCategory app:title="@string/sync_header">-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="attachment"-->
+<!--            app:summaryOff="@string/attachment_summary_off"-->
+<!--            app:summaryOn="@string/attachment_summary_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+<!--    </PreferenceCategory>-->
+
+    <PreferenceCategory android:title="Fajr">
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
+            android:key="fajrTime"
+            android:title="Blank"
+            android:dialogTitle="Fajr Time"
+            android:defaultValue="FAJR TIME HERE"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="fajrCheckBox"
+            android:title="Loud Alarm" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Thuhr">
+        <EditTextPreference
+            android:key="thuhrTime"
+            android:title="Blank"
+            android:dialogTitle="Thur Time"
+            android:defaultValue="Thuhr TIME HERE"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="thuhrCheckBox"
+            android:title="Loud Alarm" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+    <PreferenceCategory android:title="Asr">
+        <EditTextPreference
+            android:key="asrTime"
+            android:title="Blank"
+            android:dialogTitle="Asr Time"
+            android:defaultValue="ASR TIME HERE"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="asrCheckBox"
+            android:title="Loud Alarm" />
     </PreferenceCategory>
-
+    <PreferenceCategory android:title="Magrib">
+        <EditTextPreference
+            android:key="magribTime"
+            android:title="Blank"
+            android:dialogTitle="Magrib Time"
+            android:defaultValue="MAGRIB TIME HERE"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="magribCheckBox"
+            android:title="Loud Alarm" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Ishaa">
+        <EditTextPreference
+            android:key="ishaaTime"
+            android:title="Blank"
+            android:dialogTitle="Ishaa Time"
+            android:defaultValue="ISHAA TIME HERE"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="ishaaCheckBox"
+            android:title="Loud Alarm" />
+    </PreferenceCategory>
 </PreferenceScreen>

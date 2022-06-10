@@ -7,7 +7,7 @@
         android:title="@string/options"
         android:orderInCategory="101"
         app:showAsAction="always"
-        android:icon="@drawable/baseline_more_vert_black_24dp">
+        android:icon="@drawable/baseline_more_vert_white_24dp">
 
         <menu>
 

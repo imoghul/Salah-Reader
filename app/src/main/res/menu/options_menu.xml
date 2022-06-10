@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/empty"
+        android:title="@string/options"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_more_vert_black_24dp">
+
+        <menu>
+
+            <item
+                android:id="@+id/refreshButton"
+                app:showAsAction="ifRoom"
+                android:title="@string/refresh" />
+            <!--                android:icon="@android:drawable/ic_menu_preferences"-->
+
+
+
+
+        </menu>
+
+    </item>
+
+</menu>

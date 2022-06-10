@@ -1,7 +1,17 @@
 package com.example.salahreader;
 
+import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -9,20 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
-
 public class SettingsActivity extends AppCompatActivity {
-
+    ArrayAdapter<String> adapter;
+    public final String[] DropdownOptions = {"Refresh"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +34,15 @@ public class SettingsActivity extends AppCompatActivity {
             .commit();
         }
 
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, DropdownOptions);
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
+        
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -47,50 +50,19 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-            GetData g = new GetData();
-            Thread thread = new Thread(g);
-            thread.start();
-
-            String d;
-            while((d =  g.getValue()).equals(""));
-            Map<String, String[]> data = GetSalah.parser(d);
-
-            LocalDate date = LocalDate.now();
-            DayOfWeek dow = date.getDayOfWeek();
-            String dayName = dow.getDisplayName(TextStyle.FULL_STANDALONE, Locale.ENGLISH);
-            String[] todaysTimes = data.get(dayName);
-            //Place after here
-            EditTextPreference[] myTextView = new EditTextPreference[5];
-            myTextView[0] = (EditTextPreference) findPreference("fajrTime");
-            myTextView[0].setTitle(todaysTimes[0]);
-            myTextView[0].setEnabled(false);
-            myTextView[1] = (EditTextPreference) findPreference("thuhrTime");
-            myTextView[1].setTitle(todaysTimes[1]);
-            myTextView[1].setEnabled(false);
-            myTextView[2] = (EditTextPreference) findPreference("asrTime");
-            myTextView[2].setTitle(todaysTimes[2]);
-            myTextView[2].setEnabled(false);
-            myTextView[3] = (EditTextPreference) findPreference("magribTime");
-            myTextView[3].setTitle(todaysTimes[3]);
-            myTextView[3].setEnabled(false);
-            myTextView[4] = (EditTextPreference) findPreference("ishaaTime");
-            myTextView[4].setTitle(todaysTimes[4]);
-            myTextView[4].setEnabled(false);
+            // update and retrive values from API
+            RetrieveAPI.refresh();
+            String[] todaysTimes = RetrieveAPI.getCurrentTimes();
+            // update text prefernces
+            EditTextPreference myTextView;
+            String[] keys = {"fajrTime","thuhrTime","asrTime","magribTime","ishaaTime"};
+            for(int i = 0;i<5;++i){
+                myTextView = (EditTextPreference) findPreference(keys[i]);
+                myTextView.setTitle(todaysTimes[i]);
+                myTextView.setText(todaysTimes[i]);
+                myTextView.setEnabled(false);
+            }
         }
-
     }
 }
 
-class GetData implements Runnable {
-    private volatile String value = "";
-
-    @Override
-    public void run() {
-        value = GetSalah.getDataStr();
-    }
-
-    public String getValue() {
-        return value;
-    }
-}

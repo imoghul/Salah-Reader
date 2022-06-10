@@ -1,37 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <PreferenceCategory app:title="@string/messages_header">-->
-
-<!--        <EditTextPreference-->
-<!--            app:key="signature"-->
-<!--            app:title="@string/signature_title"-->
-<!--            app:useSimpleSummaryProvider="true" />-->
-
-<!--        <ListPreference-->
-<!--            app:defaultValue="reply"-->
-<!--            app:entries="@array/reply_entries"-->
-<!--            app:entryValues="@array/reply_values"-->
-<!--            app:key="reply"-->
-<!--            app:title="@string/reply_title"-->
-<!--            app:useSimpleSummaryProvider="true" />-->
-
-<!--    </PreferenceCategory>-->
-
-<!--    <PreferenceCategory app:title="@string/sync_header">-->
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="sync"-->
-<!--            app:title="@string/sync_title" />-->
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:dependency="sync"-->
-<!--            app:key="attachment"-->
-<!--            app:summaryOff="@string/attachment_summary_off"-->
-<!--            app:summaryOn="@string/attachment_summary_on"-->
-<!--            app:title="@string/attachment_title" />-->
-
-<!--    </PreferenceCategory>-->
 
     <PreferenceCategory android:title="Fajr">
         <EditTextPreference
@@ -39,7 +8,7 @@
             android:title="Fajr Time"
             android:dialogTitle="Fajr Time"
             android:defaultValue="FAJR TIME HERE"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="fajrCheckBox"
             android:title="Loud Alarm" />
@@ -50,7 +19,7 @@
             android:title="Thuhr Time"
             android:dialogTitle="Thur Time"
             android:defaultValue="THUHR TIME HERE"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="thuhrCheckBox"
             android:title="Loud Alarm" />
@@ -62,7 +31,7 @@
             android:title="Asr Time"
             android:dialogTitle="Asr Time"
             android:defaultValue="ASR TIME HERE"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="asrCheckBox"
             android:title="Loud Alarm" />
@@ -73,7 +42,7 @@
             android:title="Magrib Time"
             android:dialogTitle="Magrib Time"
             android:defaultValue="MAGRIB TIME HERE"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="magribCheckBox"
             android:title="Loud Alarm" />
@@ -84,7 +53,7 @@
             android:title="Ishaa Time"
             android:dialogTitle="Ishaa Time"
             android:defaultValue="ISHAA TIME HERE"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="ishaaCheckBox"
             android:title="Loud Alarm" />

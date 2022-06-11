@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -70,6 +71,12 @@ public class SettingsActivity extends AppCompatActivity {
 //        mAlarmManger.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshProcess();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,15 +88,17 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id){
-            case R.id.refreshButton:
-                RetrieveAPI.refresh();
-                if(SettingsActivity.sf!=null) SettingsActivity.sf.updateTimes();
-                break;
-            default:
-                break;
+        if (id == R.id.refreshButton) {
+            refreshProcess();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void refreshProcess(){
+        RetrieveAPI.refresh();
+        if (SettingsActivity.sf!=null) SettingsActivity.sf.updateTimes();
+        Toast.makeText(getApplicationContext(),"Refreshed", Toast.LENGTH_SHORT).show();
     }
 
 }

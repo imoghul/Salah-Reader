@@ -13,11 +13,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        // update and retrive values from API
-        RetrieveAPI.refresh();
-        // update text prefernces
-        updateTimes();
     }
+
 
     public void updateTimesTextView(){
         // retrieve times data for today
@@ -25,7 +22,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // update text views
         EditTextPreference myTextView;
         String[] keys = {"fajrTime","thuhrTime","asrTime","magribTime","ishaaTime"};
-        state=!state;
         for(int i = 0;i<5;++i){
             myTextView = (EditTextPreference) findPreference(keys[i]);
             myTextView.setTitle(todaysTimes[i]);

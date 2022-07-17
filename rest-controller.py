@@ -5,24 +5,6 @@ import docx2txt
 from reader import *
 from emailChecker import *
 
-def updateDoc():
-    latestEmail = latest()
-    if latestEmail["subject"] != CurrEmail.currEmail:
-        CurrEmail.currEmail = latestEmail["subject"]
-        retrieveIqaamahTimesDoc(email_message=latestEmail)
-        All.val = {}
-        Fajr.val = {}
-        Thuhr.val = {}
-        Asr.val = {}
-        Magrib.val = {}
-        Ishaa.val = {}
-        return True
-    return False
-
-
-def getSalahTime(salah):
-    updateDoc()
-    return json.dumps(getDays(salah))
 
 
 class mainPage:
@@ -93,6 +75,28 @@ asr_page = Asr()
 magrib_page = Magrib()
 ishaa_page = Ishaa()
 curremail_page = CurrEmail()
+
+def updateDoc():
+    latestEmail = latest()
+    if latestEmail["subject"] != CurrEmail.currEmail:
+        CurrEmail.currEmail = latestEmail["subject"]
+        retrieveIqaamahTimesDoc(email_message=latestEmail)
+        all_page.val = {}
+        fajr_page.val = {}
+        thuhr_page.val = {}
+        asr_page.val = {}
+        magrib_page.val = {}
+        ishaa_page.val = {}
+        return True
+    return False
+
+
+def getSalahTime(salah):
+    updateDoc()
+    return json.dumps(getDays(salah))
+
+
+
 
 app.add_route("/", main_page)
 app.add_route("/mtws-iqaamah-times", help_page)
